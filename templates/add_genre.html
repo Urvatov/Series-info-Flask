@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ДОБАВИТЬ ЖАНР
+{% endblock title %}
+
+{%block body%} 
+<h1>ДОБАВИТЬ ЖАНР</h1>
+
+{%for msg in get_flashed_messages()%}
+    <div class = "flash"> {{msg}} </div>
+{% endfor %}
+
+<form action = "/config/add_genre" method = "post" class = "form-contact">
+    <p><label> Название жанра: </label> <input type = "text" name = "title" value="" placeholder="name" required />
+    <p><input type = "submit" value = "Сохранить" />
+</form>
+
+<p><a href="/config">Назад</a></p>
+{%endblock body%}

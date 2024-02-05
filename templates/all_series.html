@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ВСЕ СЕРИАЛЫ
+{% endblock title %}
+
+{%block body%} 
+<h1>ВСЕ СЕРИАЛЫ</h1>
+<p><a href="/">Назад</a></p>
+
+
+<ul class = "list-posts">
+    {% for i in posts %}
+    <li>
+        <p class="title"><a href = "{{url_for('series', id_series = i.id)}}">{{i.title}}</a></p>
+    </li>
+    {% endfor %}
+</ul>
+
+
+{%endblock body%}

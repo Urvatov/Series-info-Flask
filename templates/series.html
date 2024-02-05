@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{%block body%} 
+<div class = "block1">
+<p><b>Название:</b> {{title}}
+<br><b>Количество сезонов:</b> {{seasons}}
+<br><b>Закончен:</b> {{finished}}
+<br><b>Дата выхода:</b> {{release}}
+<br><b>Рейтинг:</b> {{rating}}
+</p>
+
+<p><b>Жанры:</b> {% if series_genres %}{% for i in series_genres %} {{ i.genre_title }}, {% endfor %}{% endif %}</p>
+<p><b> Актеры:</b> {% if series_actors %}{% for i in series_actors %} {{ i.actor_name }}, {% endfor %}{% endif %}</p>
+<p><b>Режиссеры:</b> {% if series_directors %}{% for i in series_directors %} {{ i.director_name }}, {% endfor %}{% endif %}</p>
+<p><b>Сценаристы:</b> {% if series_writers %}{% for i in series_writers %} {{ i.writer_name }}, {% endfor %}{% endif %}</p>
+
+{%for msg in get_flashed_messages()%}
+    <div class = "flash"> {{msg}} </div>
+{% endfor %}
+
+<form action = "{{url_for('series', id_series = id_series)}}" method = "post" class = "form-contact" id = "rating">
+
+<p><b>Оценить</b>:
+    <select name="rating">
+        {%for i in range(1, 6)%}
+        <option>{{i}}</option>
+        {%endfor%}
+    </select>
+</p>
+<input type="submit">
+</form>
+
+{% if current_user.is_authenticated and current_user.get_nickname() == "admin" %}
+<p>-----------------------</p>
+
+<form action = "{{url_for('series', id_series = id_series)}}" method = "post" class = "form-contact" id="genre">
+<p><label>Добавить Жанр</label>
+    <select name="genre">
+        {%for i in genres %}
+            <option>{{i.title}}</option>
+        {%endfor%}          
+    </select> <input type = "submit" value = "Сохранить" /></p>
+</form>
+
+<form action = "{{url_for('series', id_series = id_series)}}" method = "post" class = "form-contact" id ="actor">
+<p><label>Добавить актера</label>
+    <select name="actor">
+        {%for i in actors %}
+            <option>{{i.fullname}}</option>
+        {%endfor%}          
+    </select> <input type = "submit" value = "Сохранить" /></p>
+</form>
+
+<form action = "{{url_for('series', id_series = id_series)}}" method = "post" class = "form-contact" id = "director">
+<p><label>Добавить Режиссера</label>
+    <select name="director">
+        {%for a in directors %}
+            <option>{{a.fullname}}</option>
+        {%endfor%}          
+    </select> <input type = "submit" value = "Сохранить" /></p>
+</form>
+
+<form action = "{{url_for('series', id_series = id_series)}}" method = "post" class = "form-contact" id = "writer">
+<p><label>Добавить Сценариста</label>
+    <select name="writer">
+        {%for b in writers %}
+            <option>{{b.fullname}}</option>
+        {%endfor%}          
+    </select> <input type = "submit" value = "Сохранить" /></p>
+</form>
+
+{% endif %}
+
+<p><a href="/all_series">Назад</a></p>
+</div>
+
+<div class = "block2">
+    <p>Сезоны:</p>
+    {% if series_seasons%}{%for i in series_seasons%}
+    <p>{{i.order_number}}. {{i.title}}, {{i.episodes_number}} серий</p>
+    {%endfor%}{%endif%}
+
+    {% if current_user.is_authenticated and current_user.get_nickname() == "admin" %}
+    <p>-----------------------</p>
+
+    <form action = "{{url_for('series', id_series = id_series)}}" method = "post" class = "form-contact" id = "season">
+        <p>Создание сезонов:</p>
+        <p> Название: <input type = "text" placeholder = "text" name = "season_title" > </p>
+        <p> Порядковый номер: <input type = "number" style="width: 64px;" name = "order_number" > </p>
+        <p> Количество серий: <input type = "number" style="width: 64px;" name = "episodes_number" > </p>
+        <input type = "submit" name = "create_season" value = "Создать сезон"> 
+    </form>
+    {%endif%}
+</div>
+
+
+{%endblock body%}

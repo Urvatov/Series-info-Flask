@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ДОБАВИТЬ СЕРИАЛ
+{% endblock title %}
+
+{%block body%} 
+<h1>ДОБАВИТЬ СЕРИАЛ</h1>
+
+{%for msg in get_flashed_messages()%}
+    <div class = "flash"> {{msg}} </div>
+{%endfor%}
+
+<form action = "/add_series" method = "post" class = "form-contact">
+    <p><label> Название сериала: </label> <input type = "text" name = "title" value="" placeholder="name" required />
+    <p><label> Количество сезонов: </label> <input type = "number" name = "seasons" value="" placeholder="1" required />
+    <p><label> Дата выхода: </label> <input type = "date" name = "release" value="" placeholder="01-01-2000" required />
+    <p><label> Сериал завершился: </label> 
+        <select name="finished">
+            <option>Нет</option>
+            <option>Да</option>
+        </select>
+    
+    <p><input type = "submit" value = "Сохранить" />
+</form>
+
+<p><a href="/">Назад</a></p>
+{%endblock body%}

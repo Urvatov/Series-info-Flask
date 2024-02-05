@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ГЛАВНАЯ
+{% endblock title %}
+
+{%block body%}
+
+<h1>ГЛАВНАЯ</h1>
+
+{% if current_user.is_authenticated == false%}
+
+<p> <a href="/login">Войти </a>
+<br> <a href="/register">Регистрация </a>
+
+{% endif %}
+
+<br> <a href = "/profile"> Профиль </a>
+<br> <a href="/all_series">Все сериалы </a>
+
+<br> <a href="/about">О сайте </a>
+</p>
+
+{% if current_user.is_authenticated and current_user.get_nickname() == "admin" %}
+<p>----------------</p>
+<p><a href = "/add_series"> Добавить сериал</a>
+<br><a href="/config"> config</a></p>
+{% endif %}
+
+{%endblock %}
